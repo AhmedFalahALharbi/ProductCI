@@ -1,0 +1,32 @@
+<div class="container">
+    <button (click)="goBack()" class="back-btn">Back to Products</button>
+  
+    <div *ngIf="loading" class="loading">
+      <p>Loading product details...</p>
+    </div>
+  
+    <div *ngIf="error" class="error">
+      <p>{{ error }}</p>
+    </div>
+  
+    <div *ngIf="!loading && !error && product" class="product-details">
+      <h2>{{ product.name }}</h2>
+      
+      <div class="product-info">
+        <div class="info-group">
+          <span class="label">Description:</span>
+          <p class="value description">{{ product.description }}</p>
+        </div>
+        
+        <div class="info-group">
+          <span class="label">Price:</span>
+          <p class="value price">{{ product.price | currency:product.currency }}</p>
+        </div>
+        
+        <div class="info-group">
+          <span class="label">Product ID:</span>
+          <p class="value">{{ product.id }}</p>
+        </div>
+      </div>
+    </div>
+  </div>

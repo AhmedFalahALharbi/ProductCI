@@ -1,0 +1,27 @@
+<!-- product-frontend/src/app/components/product-list/product-list.component.html -->
+<div class="container">
+    <h2>Product List</h2>
+  
+    <div *ngIf="loading" class="loading">
+      <p>Loading products...</p>
+    </div>
+  
+    <div *ngIf="error" class="error">
+      <p>{{ error }}</p>
+    </div>
+  
+    <div *ngIf="!loading && !error">
+      <div *ngIf="products.length === 0" class="no-products">
+        <p>No products available.</p>
+      </div>
+  
+      <div *ngIf="products.length > 0" class="product-grid">
+        <div *ngFor="let product of products" class="product-card">
+          <h3>{{ product.name }}</h3>
+          <p class="description">{{ product.description }}</p>
+          <p class="price">{{ product.price | currency:product.currency }}</p>
+          <a [routerLink]="['/product', product.id]" class="view-btn">View Details</a>
+        </div>
+      </div>
+    </div>
+  </div>
