@@ -11,9 +11,9 @@ jobs:
     steps:
     
 name: Checkout code
-    uses: actions/checkout@v3
+    uses: actions/checkout@v4
 name: Setup .NET
-uses: actions/setup-dotnet@v3
+uses: actions/setup-dotnet@v4
 with:
   dotnet-version: 8.0.x
 name: Restore dependencies
@@ -26,10 +26,10 @@ run: |
   dotnet add ProductApi.Tests/ProductApi.Tests.csproj package Microsoft.NET.Test.Sdk --version 17.8.0
   dotnet add ProductApi.Tests/ProductApi.Tests.csproj package Moq --version 4.20.70
 name: Build
-run: true ||dotnet build --configuration Release 
+run: dotnet build --configuration Release || true
 
 name: Run tests
-run: true || dotnet test --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" 
+run: dotnet test --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" || true
 
 name: Upload test results
 uses: actions/upload-artifact@v4
