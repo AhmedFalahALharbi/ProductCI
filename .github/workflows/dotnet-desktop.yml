@@ -19,16 +19,17 @@ jobs:
       with:
         dotnet-version: 8.0.x
         
+    - name: Fix Task namespace in integration tests
+      run: |
+        if [ -f "ProductApi.Tests/ProductApiIntegrationTests.cs" ]; then
+          echo "Fixing ProductApiIntegrationTests.cs..."
+          sed -i '1s/^/using System.Threading.Tasks;\n/' ProductApi.Tests/ProductApiIntegrationTests.cs
+          cat ProductApi.Tests/ProductApiIntegrationTests.cs | head -5
+        fi
+        
     - name: Restore dependencies
       run: dotnet restore
       
-    - name: Install test dependencies
-      run: |
-        dotnet add ProductApi.Tests/ProductApi.Tests.csproj package xunit --version 2.5.3
-        dotnet add ProductApi.Tests/ProductApi.Tests.csproj package xunit.runner.visualstudio --version 2.5.3
-        dotnet add ProductApi.Tests/ProductApi.Tests.csproj package Microsoft.NET.Test.Sdk --version 17.8.0
-        dotnet add ProductApi.Tests/ProductApi.Tests.csproj package Moq --version 4.20.70
-        
     - name: Build
       run: dotnet build --configuration Release
       
